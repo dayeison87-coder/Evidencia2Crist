@@ -28,7 +28,10 @@ services:
       - "3306:3306"
     networks:
       - red-interna
+      - bridge
 
 networks:
   red-interna:
+    driver: bridge
+  bridge:
     driver: bridge
