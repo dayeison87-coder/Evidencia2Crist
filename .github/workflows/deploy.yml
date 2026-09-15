@@ -54,7 +54,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build local Docker image
-        run: docker build -t evidencia2crist-api:test .
+        run: docker build --no-cache -t evidencia2crist-api:test .
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master

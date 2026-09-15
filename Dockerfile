@@ -4,8 +4,7 @@ RUN apt-get update && apt-get upgrade -y && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-
-RUN pip install --no-cache-dir --upgrade pip "setuptools>=78.1.1" wheel
+RUN pip install --no-cache-dir --upgrade pip "setuptools>=78.1.1" "msgpack>=1.2.1" wheel
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
