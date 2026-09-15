@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
 COPY . .
 
 EXPOSE 5000
-CMD ["python", "app.py"]
+CMD ["python", "app/app.py"]
