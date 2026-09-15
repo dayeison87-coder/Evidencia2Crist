@@ -24,7 +24,7 @@ services:
     ports:
       - "8888:8080"
     networks:
-      - npm-bridge
+      - npm-network
 
   uptime-kuma:
     image: louislam/uptime-kuma:1
@@ -35,7 +35,7 @@ services:
     ports:
       - "3001:3001"
     networks:
-      - npm-bridge
+      - npm-network
 
   db:
     image: mysql:8.0
@@ -54,7 +54,7 @@ services:
 networks:
   red-interna:
     driver: bridge
-  npm-bridge:
+  npm-network:
     external: true
     name: bridge
 
