@@ -15,6 +15,28 @@ services:
     networks:
       - red-interna
 
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle-logs
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "8888:8080"
+    networks:
+      - npm-bridge
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    restart: always
+    volumes:
+      - uptime-kuma-data:/app/data
+    ports:
+      - "3001:3001"
+    networks:
+      - npm-bridge
+
   db:
     image: mysql:8.0
     container_name: servidor-bd-zero
@@ -33,5 +55,9 @@ services:
 networks:
   red-interna:
     driver: bridge
-  bridge:
-    driver: bridge
+  npm-bridge:
+    external: true
+    name: bridge
+
+volumes:
+  uptime-kuma-data:

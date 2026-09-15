@@ -91,5 +91,6 @@ jobs:
               git pull origin main
             fi
 
+            docker rm -f api-flask-zero servidor-bd-zero 2>/dev/null || true
             docker compose down --remove-orphans || true
             docker compose up -d --build
