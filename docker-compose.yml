@@ -14,6 +14,7 @@ services:
       - DB_NAME=appdb
     networks:
       - red-interna
+      - npm-network
 
   dozzle:
     image: amir20/dozzle:latest
@@ -36,6 +37,7 @@ services:
       - "3001:3001"
     networks:
       - npm-network
+      - red-interna
 
   db:
     image: mysql:8.0
@@ -56,7 +58,6 @@ networks:
     driver: bridge
   npm-network:
     external: true
-    name: bridge
 
 volumes:
   uptime-kuma-data:
