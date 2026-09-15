@@ -91,4 +91,5 @@ jobs:
               git pull origin main
             fi
 
+            docker compose down --remove-orphans || true
             docker compose up -d --build
