@@ -1,16 +1,21 @@
 from unittest.mock import MagicMock, patch
+import os
+import sys
 import pytest
-from app.app import app, get_db_connection 
+
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
+
+import app as flask_module
 
 
 @pytest.fixture
 def client():
-  app.config['TESTING'] = True
-  with app.test_client() as client:
+  flask_module.app.config['TESTING'] = True
+  with flask_module.app.test_client() as client:
     yield client
 
 
-@patch('app.app.get_db_connection')
+@patch.object(flask_module, 'get_db_connection')
 def test_health(mock_get_db, client):
   mock_conn = MagicMock()
   mock_conn.ping.return_value = True
