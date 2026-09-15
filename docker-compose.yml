@@ -3,7 +3,7 @@ version: '3.8'
 services:
   api:
     build: .
-    container_name: api-flask
+    container_name: api-flask-zero
     restart: always
     ports:
       - "5000:5000"
@@ -15,7 +15,7 @@ services:
 
   db:
     image: mysql:8.0
-    container_name: servidor-bd-ejemplo
+    container_name: servidor-bd-zero
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootsecret
