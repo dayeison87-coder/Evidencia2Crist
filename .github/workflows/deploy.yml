@@ -46,7 +46,7 @@ jobs:
       - name: Run Bandit Scan
         run: bandit -r . -x ./tests -lll -iii
 
-  # 3. Análisis de Vulnerabilidades
+  # 3. Análisis de Vulnerabilidades en Imágenes
   trivy-scan:
     needs: bandit-sast
     runs-on: ubuntu-latest
@@ -67,7 +67,7 @@ jobs:
           vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
 
-  # 4. Despliegue en Servidor
+  # 4. Despliegue Automático en Servidor
   deploy:
     needs: [test, bandit-sast, trivy-scan]
     runs-on: ubuntu-latest
@@ -81,16 +81,17 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            TARGET_DIR="~/npm"
+            TARGET_DIR="$HOME/Evidencia2Crist"
             
             if [ ! -d "$TARGET_DIR/.git" ]; then
-              git clone https://github.com/${{ github.repository }}.git $TARGET_DIR
-              cd $TARGET_DIR
+              git clone https://github.com/${{ github.repository }}.git "$TARGET_DIR"
+              cd "$TARGET_DIR"
             else
-              cd $TARGET_DIR
-              git pull origin main
+              cd "$TARGET_DIR"
+              git fetch origin main
+              git reset --hard origin/main
             fi
 
-            docker rm -f api-flask-zero servidor-bd-zero 2>/dev/null || true
+            docker network create npm-network 2>/dev/null || true
             docker compose down --remove-orphans || true
             docker compose up -d --build
